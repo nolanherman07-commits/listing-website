@@ -62,3 +62,9 @@ em { font-style: italic; color: var(--accent); }
   .sticky .z { background: #006aff; } .sticky .c { background: var(--accent); }
   body { padding-bottom: 80px; }
 }
+/* Placeholder watermark over background video */
+.vid-mark { position: absolute; z-index: 2; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; color: rgba(255,255,255,.3); text-shadow: 0 2px 24px rgba(0,0,0,.45); }
+.vid-mark b { font: 400 clamp(2rem, 6vw, 5.4rem)/1 var(--serif); letter-spacing: .02em; -webkit-text-stroke: 1px rgba(255,255,255,.5); }
+.vid-mark span { margin-top: .7rem; font: 500 clamp(.6rem, 1vw, .8rem)/1 var(--sans); letter-spacing: .32em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.frame .vid-mark { right: 380px; }
+@media (max-width: 900px) { .frame .vid-mark { right: 0; bottom: auto; height: 56vh; } }
