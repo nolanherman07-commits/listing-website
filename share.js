@@ -24,5 +24,20 @@ document.addEventListener("DOMContentLoaded", () => {
     facebook: () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank", "noopener,width=640,height=560"),
   };
   document.querySelectorAll("[data-share]").forEach((b) => b.addEventListener("click", (e) => { e.preventDefault(); actions[b.dataset.share](); }));
+
+  // Elite-style text motion
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.15 });
+  const split = (h, start, wait) => {
+    const parts = h.innerHTML.split(/(<em>.*?<\/em>|\s+)/).filter((p) => p && p.trim());
+    h.innerHTML = parts.map((p, i) => `<span class="w"><span style="animation-delay:${start + i * 0.12}s">${p}</span></span>`).join(" ");
+    h.classList.add("split-words");
+    if (wait) { h.classList.add("wait"); io.observe(h); }
+  };
+  document.querySelectorAll("h1").forEach((h) => { h.classList.remove("up", "d1", "d2"); split(h, 0.2, false); });
+  document.querySelectorAll("section h2").forEach((h) => { if (!h.closest(".hero, .frame")) split(h, 0.1, true); });
+  document.querySelectorAll(".section .eyebrow, .section h2 ~ p, .section ul, .gallery, .facts, .remarks, .card").forEach((el) => {
+    if (el.closest(".hero, .frame") || el.classList.contains("up")) return;
+    el.classList.add("reveal"); io.observe(el);
+  });
   document.querySelectorAll("[data-zillow]").forEach((a) => { a.href = LISTING.zillow; a.target = "_blank"; a.rel = "noopener"; });
 });

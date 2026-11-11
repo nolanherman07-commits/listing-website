@@ -68,3 +68,17 @@ em { font-style: italic; color: var(--accent); }
 .vid-mark span { margin-top: .7rem; font: 500 clamp(.6rem, 1vw, .8rem)/1 var(--sans); letter-spacing: .32em; text-transform: uppercase; color: rgba(255,255,255,.7); }
 .frame .vid-mark { right: 380px; }
 @media (max-width: 900px) { .frame .vid-mark { right: 0; bottom: auto; height: 56vh; } }
+/* Photo hover: hovered photo grows, the others ease back */
+.gallery > *, .thumbs > * { transition: transform .5s cubic-bezier(.2,.8,.2,1), filter .5s ease, box-shadow .5s ease; will-change: transform; }
+.gallery:hover > *, .thumbs:hover > * { transform: scale(.96); filter: brightness(.82); }
+.gallery > *:hover, .thumbs > *:hover { transform: scale(1.05); filter: none; z-index: 2; position: relative; box-shadow: 0 24px 50px rgba(0,0,0,.28); }
+/* Elite-style text: words slide up, content reveals on scroll */
+h1, h2, h3 { letter-spacing: -.01em; }
+.split-words .w { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .08em; }
+.split-words .w > span { display: inline-block; transform: translateY(110%); animation: wordUp 1.1s cubic-bezier(.2,.8,.2,1) forwards; }
+.split-words.wait .w > span { animation-play-state: paused; }
+.split-words.wait.in .w > span { animation-play-state: running; }
+@keyframes wordUp { to { transform: none; } }
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 1.1s ease, transform 1.1s cubic-bezier(.2,.8,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .split-words .w > span { animation: none; transform: none; } .reveal { opacity: 1; transform: none; } }
